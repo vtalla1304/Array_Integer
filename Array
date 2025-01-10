@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+std::vector<int> findIndices(const std::vector<int>& array, int sum) {
+    std::unordered_map<int, int> index_map; // Map to store values and their indices
+
+    for (int index = 0; index < array.size(); index++) {
+        int difference = sum - array[index];
+
+        // Check if the difference exists in the map
+        if (index_map.find(difference) != index_map.end()) {
+            return {index_map[difference], index};
+        }
+
+        // Store the current value with its index
+        index_map[array[index]] = index;
+    }
+
+    // Return an empty vector if no solution is found
+    return {};
+}
+
+int main() {
+    int n, target;
+
+    // Get the number of elements in the array
+    std::cout << "Enter the number of elements in the array: ";
+    std::cin >> n;
+
+    std::vector<int> array(n);
+
+    // Input array elements
+    std::cout << "Enter the elements of the array:\n";
+    for (int i = 0; i < n; i++) {
+        std::cin >> array[i];
+    }
+
+    // Input the target sum
+    std::cout << "Enter the target sum: ";
+    std::cin >> target;
+
+    // Find indices of the two numbers
+    auto result = findIndices(array, target);
+
+    // Output the result
+    if (!result.empty()) {
+        std::cout << "Indices of the two numbers are: [" << result[0] << ", " << result[1] << "]\n";
+    } else {
+        std::cout << "No solution exists.\n";
+    }
+
+    return 0;
+}
+
